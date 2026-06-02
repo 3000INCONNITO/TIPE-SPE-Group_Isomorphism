@@ -1,0 +1,240 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz-cd}
+\usepackage{multicol}
+\usepackage{stmaryrd}
+\usepackage{amssymb}
+\usepackage{float}
+
+\algnotext{EndFor}
+\algnotext{EndIf}
+\algnotext{EndWhile}
+\algnotext{EndProcedure}
+
+\renewcommand{\algorithmicrequire}{\textbf{Entrées :}}
+\renewcommand{\algorithmicensure}{\textbf{Sorties :}}
+\renewcommand{\algorithmicwhile}{\textbf{Tant que}}
+\renewcommand{\algorithmicfor}{\textbf{Pour}}
+\renewcommand{\algorithmicdo}{\textbf{faire:}}
+\renewcommand{\algorithmicif}{\textbf{si}}
+\renewcommand{\algorithmicelse}{\textbf{sinon}}
+\renewcommand{\algorithmicthen}{\textbf{alors:}}
+
+
+\renewcommand{\algorithmicthen}{\textbf{alors:}}
+\renewcommand{\algorithmicreturn}{\textbf{renvoyer}}
+
+% Force l'alinéa même après les sections
+\usepackage{indentfirst}
+
+% Pagination propre
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+
+% Paragraphes
+\setlength{\parindent}{15pt}
+\setlength{\parskip}{0pt}
+
+\title{Rapport de TIPE \\
+Sur le problème d'isomorphisme de groupes}
+\author{Saehyun Davin JEON, MPI 2025-2026}
+\date{Printemps 2026}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\contentsname}{Sommaire}
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+La théorie des groupes constitue l'un des piliers fondamentaux de l'algèbre moderne. 
+Apparue d'abord au XIX\textsuperscript{e} siècle avec les travaux d'Évariste Galois, cette notion fut ensuite généralisée par Arthur Cayley, qui en 1854 donna une première définition rigoureuse d'un groupe fini.
+
+Très rapidement, la question de comparer les groupes entre eux s’est imposée naturellement : quand peut-on considérer deux groupes comme structurellement identiques ? C’est dans ce contexte que Max Dehn introduit au début du XX\textsuperscript{e} siècle le problème de l’isomorphisme de groupes, parmi d’autres problèmes de décision fondamentaux en théorie des groupes.
+
+Dans sa formulation générale (groupes donnés par présentation), ce problème est indécidable. En revanche, dans des cadres plus restreints comme les groupes finis décrits par table de Cayley, il devient décidable et admet des algorithmes efficaces. \\
+
+Dans ce travail, on se restreint au cas de groupes finis de même cardinal, donnés par leur table de Cayley, et l’on s’intéresse aux problèmes de leur isomorphisme, à savoir:
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.9\linewidth}
+\vspace{0.1cm}
+\textbf{IsoGroupeDéc}
+
+\vspace{0.3cm}
+\textbf{Entrée :} $n \in \mathbb{N^*}$, deux groupes $G_1$ et $G_2$ avec $|G_1| = |G_2| = n$, donnés par leurs tables de Cayley.
+
+\textbf{Sortie :} $G_1$ et $G_2$ sont-ils isomorphes ?
+\vspace{0.1cm}
+\end{minipage}
+}
+\end{center}
+
+\begin{center}
+\fbox{
+\begin{minipage}{0.9\linewidth}
+\vspace{0.1cm}
+\textbf{IsoGroupe}
+
+\vspace{0.3cm}
+
+\textbf{Entrée :} $n \in \mathbb{N}^*$, deux groupes $G_1$ et $G_2$ tels que $|G_1| = |G_2| = n$, donnés par leurs tables de Cayley.
+
+\vspace{0.3cm}
+
+\textbf{Sortie :}
+\[
+\left\{
+\begin{array}{ll}
+\text{Non} & \text{si } G_1 \not\simeq G_2, \\
+(\text{Oui}, \phi) & \text{où } \phi: G_1 \xrightarrow{}G_2 \text{ est un isomorphisme explicite}
+\end{array}
+\right.
+\]
+\vspace{0.1cm}
+
+\end{minipage}
+}
+\end{center}
+Par souci d’implémentation, on identifie tout groupe fini $G$ d’ordre $n$ à l’ensemble $[\![0, n-1]\!]$, et sa loi de composition est représentée par une table de Cayley, c’est-à-dire une matrice $T$ telle que
+\[
+T[i][j] = i \cdot j.
+\]
+ce qui permet de réaliser les calculs en temps constant. \\
+
+L'objectif de ce TIPE\footnote{Travail d’initiative personnelle encadrée.} est de voir différentes stratégies, proposées par Tarjan (1978), dans l'implémentation d'un tel algorithme pour le cas général. Ensuite, nous verrons les techniques employées par Nader H. Bshouty (2025), qui s'inspire des idées de Tarjan pour améliorer considérablement un tel algorithme dans le cadres des groupes abéliens finis. Enfin, nous verrons comment cet algorithme peut ensuite être amélioré en un algorithme probabiliste, encore plus efficace.
+
+
+\section{Stratégies pour le cas général}
+
+\subsection{Un algorithme naïf ?}
+On se doute que la complexité d'un algorithme naïf n'aura pas une bonne complexité. En effet, une recherche exhaustive impose à regarder toutes les applications bijectives $f: G_1  \xrightarrow{} G_2$ de vérifier pour tout couple $(x,y)$ dans $G_1$, si $f(xy)= f(x) \cdot f(y)$ : \\
+\begin{algorithm}[H]
+\caption{Recherche exhaustive d'isomorphisme}
+\begin{algorithmic}[1]
+    \Require $n \in \mathbb{N^*}$ et deux groupes $G_1, G_2$ d'ordre $n$
+    \Ensure $G_1$ et $G_2$ sont-ils isomorphes ?
+    
+    \For{$f: G_1 \xrightarrow[]{} G_2$ bijective}
+        \State $iso \gets \text{vrai}$
+        \For{$(x,y) \in (G_1)^2$}              
+            \If{$f(x  y) \neq f(x) \cdot f(y)$}
+                \State $iso \gets \text{faux}$
+                \State \textbf{quitter la boucle} \Comment{On quitte la boucle interne}
+            \EndIf
+        \EndFor
+        \If{$iso == \text{vrai}$}
+            \State \Return \text{Oui} \Comment{On a trouvé un isomorphisme}
+        \EndIf
+    \EndFor
+    \State \Return \text{Non}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{description}
+    \item[\textbf{Complexité: }] $\Omega(n!n^2)$
+\end{description}
+
+\subsection{L'approche de Tarjan}
+L'approche de Tarjan consiste à identifier une petite famille de générateurs $F$ de $G_1$ ($|F| \ll n$). Il suffit alors d'itérer sur les applications injectives de $F$ dans $G_2$, que l'on étend ensuite en une application totale de $G_1$ dans $G_2$. Cela permet de réduire considérablement l'espace de recherche. \\
+
+\begin{algorithm}[H]
+\caption{Neutre}
+\begin{algorithmic}
+    \Require{$n \in \mathbb{N^*}$ et $T$ une table de Cayley $n$}
+    \Ensure {Renvoie le neutre de $G$}
+    \For{$x \in [\![0, n-1]\!]$}
+        \State $y \gets (x+1) \mod{n}$
+        \If{$T[x][y] = y$}
+            \State \Return $x$
+        \EndIf
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
+\begin{description}
+    \item[\textbf{Complexité:}] $\mathcal{O}(n)$ 
+\end{description}
+
+\begin{algorithm}[H]
+\caption{Générateurs et décompositions}
+\begin{algorithmic}[1]
+    \Require Un groupe fini $G$ avec $n = |G|$.
+    \Ensure Les générateurs $\{a_1, \dots, a_t\}$ avec $t \le \log_2(n)$ et une table de listes chaînées $(\lambda(x))_{x \in G}$ des décompositions selon les générateurs
+    
+    \Statex \hrulefill % Ligne de séparation sous l'entête
+    
+    \State $A_0 \gets \varnothing$
+    \State $G_0 \gets \{e\}$
+    \State $i \gets 0$
+    \State $\forall a \in G, \lambda(a) \gets \text{NULL}$
+    
+    \While{$G \neq G_i$}
+        \State $i \gets i + 1$
+        \State $G_i \gets G_{i-1}$
+        \State Choisir $a_i \in G \setminus G_{i-1}$
+        \State $A_i \gets A_{i-1} \cup \{a_i\}$
+        
+        \For{$x \in G_{i-1}$}
+            \State $\lambda(a_i x) \gets \text{CopierListe}(\lambda(x))$
+            \State Ajouter en tête de $\lambda(a_i x)$ le nœud $(a_i, \text{NULL})$
+            \State $G_i \gets G_i \cup \{a_i x\}$
+        \EndFor
+    \EndWhile
+    
+    \State \Return $t \gets i$, $A \gets A_i$, et la table de listes chaînées $\lambda$
+\end{algorithmic}
+\end{algorithm}
+\begin{description}
+    \item[\textbf{Complexité :}] $\mathcal{O}(nlog(n))$
+\end{description}
+
+\begin{algorithm}[H]
+\caption{IsoGroupeDéc (général)}
+\begin{algorithmic}[1]
+    \Require{$n \in \mathbb{N^*}$ et deux groupes $G_1, G_2$ d'ordre $n$}
+    \Ensure $G_1$ et $G_2$ sont-ils isomorphes ?
+     \State{$H \gets $ une famille de générateurs de $G_1$ de taille $\mathcal{O}(log(n))$}
+    \For{$f: H \xrightarrow{} G_2$ injectives}
+        \State {estIsomorphisme $\gets$ Vrai}
+        \State {Étendre $f$ en $\phi: G_1\xrightarrow[]{} G_2$ totale}
+        \For{$(x,y) \in G_1$}
+            \If{$\phi(xy) \not = \phi(x)\cdot \phi(y)$}
+                \State {estIsomorphisme $\gets$ Faux}
+                \State \textbf{Quitter la boucle}
+            \EndIf
+        \EndFor
+        \If {estIsomorphisme}
+            \State \Return Vrai
+        \EndIf
+    \EndFor
+\State \Return Faux
+\end{algorithmic}
+\end{algorithm}
+
+\begin{description}
+    \item[\textbf{Étendre $f$ en $\phi$ totale: }] $\mathcal{O}(nlog(n))$
+    \item[\textbf{Vérifier que $\phi$ est un isomorphisme ou non: }] $\mathcal{O}(n^2)$
+    \item[\textbf{Nombre d'applications $f: F \xrightarrow[]{} G_2$ injectives: }] $\mathcal{O}\left( \frac{n!}{(n-\lfloor \log_2(n) \rfloor)!} \right)$ =\footnote{Par la formule de Stirling: $n! \sim \sqrt{2\pi n} \left( \frac{n}{e}\right)^n$}$ O(n^{log_2(n) + 2.45})$
+    \item[\textbf{Complexité totale: }] $n^{log_2(n) + \mathcal{O}(1)}$
+\end{description}
+
+
+
+\newpage
+
+\section{Le cas des groupes abéliens}
+
+\subsection{Le théorème de structure des groupes abéliens finis}
+
+\end{document}
