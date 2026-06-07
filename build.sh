@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# gcc -g tests.c Algorithms/snf.c -o TESTS
-# valgrind --leak-check=full --show-leak-kinds=all ./TESTS
+gcc -g tests.c Gen_Table/gen_table.c Groups/group.c Algorithms/snf.c Algorithms/algs.c Algorithms/jules.c Garbage_Collector/garbage_collector.c Linked_List/linked_list.c -o TESTS
+#valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./TESTS
 
-gcc -g main.c Gen_Table/gen_table.c Linked_List/linked_list.c Groups/group.c Algorithms/algs.c Algorithms/snf.c
-echo "[+] main.c build finished."
+# gcc -g main.c Gen_Table/gen_table.c Linked_List/linked_list.c Groups/group.c Algorithms/algs.c Algorithms/snf.c
+# echo "[+] main.c build finished."
 
-valgrind --leak-check=full --show-leak-kinds=all ./a.out
+# valgrind --leak-check=full --show-leak-kinds=all ./a.out

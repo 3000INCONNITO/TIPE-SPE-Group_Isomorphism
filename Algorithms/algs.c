@@ -89,6 +89,65 @@ int calculate_next_gen_and_rel(group g, group_data gd, int new_gen, int neutral)
 	return next_gen;
 }
 
+
+
+
+
+
+int calculate_next_gen_and_rel_fast(group g, group_data gd, gbg_collector coll, int new_gen, int neutral) {
+	assert(g != NULL && gd != NULL);
+	assert(new_gen >= 0);
+
+	if (!gd->initialised) {
+		init_empty_group_data(gd, neutral);
+	}
+	list new_grp_elts = create_empty_list();
+	int curr = new_gen;
+	int k = 1;
+	int to_add, x;
+
+	while (!gd->contains[curr]) {
+		for (node_t* node = gd->grp_elts->head; node != NULL; node = node->next) {
+			x = node->val;
+			to_add = calculate(g, curr, x);
+
+			if (!gd->contains[curr]) {
+				push(new_grp_elts, curr);
+				// push_data_list(gd->decomps[curr], new_gen, k);
+				append_data_in_tabl_only(gd->decomps, gd->n, curr, new_gen, k, coll);
+				gd->contains[curr] = true;
+			}
+
+			if (!gd->contains[to_add]) {
+				push(new_grp_elts, to_add);
+				// del_copy_from(&gd->decomps[to_add], gd->decomps[x]);
+				append_data_and_link_in_tabl(gd->decomps, gd->n, to_add, x, new_gen, k, coll);
+				gd->contains[to_add] = true;
+			}
+		}
+
+		k++;
+		curr = calculate(g, curr, new_gen);
+	}
+
+	push_data_list(gd->generators, new_gen, k);
+
+	int to_push;
+	while(new_grp_elts->length > 0) {
+		to_push = pop(new_grp_elts);
+		push(gd->grp_elts, to_push);
+	}
+	free_list(new_grp_elts);
+
+	int next_gen = 0;
+	while (next_gen < gd->n && gd->contains[next_gen]) {
+		next_gen++;
+	}
+
+	return next_gen;
+}
+
+
 group_data calculate_group_data(group g) {
 	int neutral = find_neutral(g);
 
@@ -99,6 +158,21 @@ group_data calculate_group_data(group g) {
 
 	while (gen < g->n && gd->grp_elts->length < g->n) {
 		gen = calculate_next_gen_and_rel(g, gd, gen, neutral);
+	}
+
+	return gd;
+}
+
+group_data calculate_group_data_fast(group g, gbg_collector trash) {
+	int neutral = find_neutral(g);
+
+	group_data gd = create_empty_group_data(g->n);
+	init_empty_group_data(gd, neutral);
+
+	int gen = 0;
+
+	while (gen < g->n && gd->grp_elts->length < g->n) {
+		gen = calculate_next_gen_and_rel_fast(g, gd, trash, gen, neutral);
 	}
 
 	return gd;

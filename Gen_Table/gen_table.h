@@ -25,7 +25,7 @@ typedef node_data_t* node_data;
 
 typedef struct data_list_s {
   node_data head;
-	node_data tail;
+  node_data tail;
   int length;
 } data_list_t;
 typedef data_list_t* data_list;
