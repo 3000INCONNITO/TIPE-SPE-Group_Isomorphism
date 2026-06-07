@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdio.h>
 
-#define TEST_ORDER 100
+#define TEST_ORDER 30030
 
 group create_group() {
 	group g = create_abelian_group(TEST_ORDER);
@@ -13,7 +13,7 @@ group create_group() {
 }
 
 int main() {
-	int runs = 10;
+	int runs = 20;
 
 	double fast_total = 0.0;
 	double normal_total = 0.0;

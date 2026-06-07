@@ -22,6 +22,7 @@ gbg_collector create_empty_gbg_collector(void) {
 	gbg_collector res = malloc(sizeof(gbg_collector_t));
 	res->head = NULL;
 	res->size = 0;
+	return res;
 }
 
 void push_gbg_collector(node_data* nd_addr, gbg_collector collector) {
