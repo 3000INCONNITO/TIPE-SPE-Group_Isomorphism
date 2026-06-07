@@ -1,0 +1,64 @@
+Order: 2310
+Runs: 50
+
+calculate_group_data_fast : 0.000243936 s
+calculate_group_data      : 0.000263354 s
+
+Speedup: 1.08x
+
+Order: 2730
+Runs: 50
+
+calculate_group_data_fast : 0.000264276 s
+calculate_group_data      : 0.000314656 s
+
+Speedup: 1.19x
+
+
+Order: 3570
+Runs: 50
+
+calculate_group_data_fast : 0.000344388 s
+calculate_group_data      : 0.000442858 s
+
+Speedup: 1.29x
+
+
+Order: 30030
+Runs: 20
+
+calculate_group_data_fast : 0.003950559 s
+calculate_group_data      : 0.004333034 s
+
+Speedup: 1.10x
+
+
+
+Order: 39270
+Runs: 20
+
+calculate_group_data_fast : 0.003338142 s
+calculate_group_data      : 0.003577581 s
+
+Speedup: 1.07x
+
+
+
+Order: 43890
+Runs: 20
+
+calculate_group_data_fast : 0.006837789 s
+calculate_group_data      : 0.008064358 s
+
+Speedup: 1.18x
+
+
+
+
+Order: 46410
+Runs: 20
+
+calculate_group_data_fast : 0.004032310 s
+calculate_group_data      : 0.004302548 s
+
+Speedup: 1.07x

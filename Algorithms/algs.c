@@ -89,11 +89,6 @@ int calculate_next_gen_and_rel(group g, group_data gd, int new_gen, int neutral)
 	return next_gen;
 }
 
-
-
-
-
-
 int calculate_next_gen_and_rel_fast(group g, group_data gd, gbg_collector coll, int new_gen, int neutral) {
 	assert(g != NULL && gd != NULL);
 	assert(new_gen >= 0);

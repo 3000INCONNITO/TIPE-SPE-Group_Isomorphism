@@ -1,0 +1,310 @@
+Order: 10729
+Fast: 0.003194887
+Normal: 0.002513894
+Speedup: 0.7868
+
+Order: 10779
+Fast: 0.001683525
+Normal: 0.001586544
+Speedup: 0.9424
+
+Order: 10829
+Fast: 0.002192255
+Normal: 0.001462714
+Speedup: 0.6672
+
+Order: 10879
+Fast: 0.001313881
+Normal: 0.001393690
+Speedup: 1.0607
+
+Order: 10929
+Fast: 0.001778533
+Normal: 0.001189474
+Speedup: 0.6688
+
+Order: 10979
+Fast: 0.001827425
+Normal: 0.001326892
+Speedup: 0.7261
+
+Order: 11029
+Fast: 0.001813792
+Normal: 0.001953042
+Speedup: 1.0768
+
+Order: 11079
+Fast: 0.001343868
+Normal: 0.001581757
+Speedup: 1.1770
+
+Order: 11129
+Fast: 0.001375656
+Normal: 0.001447134
+Speedup: 1.0520
+
+Order: 11179
+Fast: 0.001405116
+Normal: 0.001408209
+Speedup: 1.0022
+
+Order: 11229
+Fast: 0.001436103
+Normal: 0.001370363
+Speedup: 0.9542
+
+Order: 11279
+Fast: 0.001905301
+Normal: 0.001360020
+Speedup: 0.7138
+
+Order: 11329
+Fast: 0.002472479
+Normal: 0.002023640
+Speedup: 0.8185
+
+Order: 11379
+Fast: 0.001563389
+Normal: 0.001809312
+Speedup: 1.1573
+
+Order: 11429
+Fast: 0.001229521
+Normal: 0.001248295
+Speedup: 1.0153
+
+Order: 11479
+Fast: 0.001596042
+Normal: 0.001176553
+Speedup: 0.7372
+
+Order: 11529
+Fast: 0.001178469
+Normal: 0.001377365
+Speedup: 1.1688
+
+Order: 11579
+Fast: 0.002178058
+Normal: 0.001828203
+Speedup: 0.8394
+
+Order: 11629
+Fast: 0.001148694
+Normal: 0.001189682
+Speedup: 1.0357
+
+Order: 11679
+Fast: 0.001196765
+Normal: 0.001273716
+Speedup: 1.0643
+
+Order: 11729
+Fast: 0.001343425
+Normal: 0.001327216
+Speedup: 0.9879
+
+Order: 11779
+Fast: 0.001672155
+Normal: 0.001375281
+Speedup: 0.8225
+
+Order: 11829
+Fast: 0.002193090
+Normal: 0.001802086
+Speedup: 0.8217
+
+Order: 11879
+Fast: 0.001656342
+Normal: 0.001846870
+Speedup: 1.1150
+
+Order: 11929
+Fast: 0.001655349
+Normal: 0.001383588
+Speedup: 0.8358
+
+Order: 11979
+Fast: 0.001243359
+Normal: 0.001566922
+Speedup: 1.2602
+
+Order: 12029
+Fast: 0.002912977
+Normal: 0.001937837
+Speedup: 0.6652
+
+Order: 12079
+Fast: 0.001288291
+Normal: 0.001225260
+Speedup: 0.9511
+
+Order: 12129
+Fast: 0.001975743
+Normal: 0.002502060
+Speedup: 1.2664
+
+Order: 12179
+Fast: 0.004057944
+Normal: 0.003399633
+Speedup: 0.8378
+
+Order: 12229
+Fast: 0.002050202
+Normal: 0.002269797
+Speedup: 1.1071
+
+Order: 12279
+Fast: 0.002607370
+Normal: 0.001946045
+Speedup: 0.7464
+
+Order: 12329
+Fast: 0.002070791
+Normal: 0.001547579
+Speedup: 0.7473
+
+Order: 12379
+Fast: 0.003238300
+Normal: 0.003346128
+Speedup: 1.0333
+
+Order: 12429
+Fast: 0.002446160
+Normal: 0.002620761
+Speedup: 1.0714
+
+Order: 12479
+Fast: 0.001853628
+Normal: 0.001415761
+Speedup: 0.7638
+
+Order: 12529
+Fast: 0.002468953
+Normal: 0.003070247
+Speedup: 1.2435
+
+Order: 12579
+Fast: 0.001507562
+Normal: 0.001415875
+Speedup: 0.9392
+
+Order: 12629
+Fast: 0.001870554
+Normal: 0.001359582
+Speedup: 0.7268
+
+Order: 12679
+Fast: 0.001296625
+Normal: 0.001244724
+Speedup: 0.9600
+
+Order: 12729
+Fast: 0.001783564
+Normal: 0.001816456
+Speedup: 1.0184
+
+Order: 12779
+Fast: 0.002149362
+Normal: 0.001715651
+Speedup: 0.7982
+
+Order: 12829
+Fast: 0.001820043
+Normal: 0.001493111
+Speedup: 0.8204
+
+Order: 12879
+Fast: 0.001308970
+Normal: 0.001366885
+Speedup: 1.0442
+
+Order: 12929
+Fast: 0.001387033
+Normal: 0.001436424
+Speedup: 1.0356
+
+Order: 12979
+Fast: 0.001770170
+Normal: 0.001371205
+Speedup: 0.7746
+
+Order: 13029
+Fast: 0.001421576
+Normal: 0.001489195
+Speedup: 1.0476
+
+Order: 13079
+Fast: 0.001270392
+Normal: 0.001417665
+Speedup: 1.1159
+
+Order: 13129
+Fast: 0.001891653
+Normal: 0.001344908
+Speedup: 0.7110
+
+Order: 13179
+Fast: 0.001353935
+Normal: 0.001345510
+Speedup: 0.9938
+
+Order: 13229
+Fast: 0.001813918
+Normal: 0.001509279
+Speedup: 0.8321
+
+Order: 13279
+Fast: 0.001596201
+Normal: 0.001863211
+Speedup: 1.1673
+
+Order: 13329
+Fast: 0.005237002
+Normal: 0.003524949
+Speedup: 0.6731
+
+Order: 13379
+Fast: 0.002917098
+Normal: 0.002032358
+Speedup: 0.6967
+
+Order: 13429
+Fast: 0.001976629
+Normal: 0.002015040
+Speedup: 1.0194
+
+Order: 13479
+Fast: 0.001618557
+Normal: 0.001498128
+Speedup: 0.9256
+
+Order: 13529
+Fast: 0.002232042
+Normal: 0.001708703
+Speedup: 0.7655
+
+Order: 13579
+Fast: 0.002245677
+Normal: 0.001817588
+Speedup: 0.8094
+
+Order: 13629
+Fast: 0.001498346
+Normal: 0.001559421
+Speedup: 1.0408
+
+Order: 13679
+Fast: 0.002596596
+Normal: 0.001946763
+Speedup: 0.7497
+
+Order: 13729
+Fast: 0.002622854
+Normal: 0.001915985
+Speedup: 0.7305
+
+Order: 13779
+Fast: 0.002620696
+Normal: 0.002434061
+Speedup: 0.9288
+

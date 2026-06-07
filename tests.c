@@ -5,72 +5,84 @@
 #include <time.h>
 #include <stdio.h>
 
-#define TEST_ORDER 30030
+#define MAX_ORDER 15000
+#define RUNS 15
 
-group create_group() {
-	group g = create_abelian_group(TEST_ORDER);
-	return g;
+static double elapsed(struct timespec start, struct timespec end) {
+	return (end.tv_sec - start.tv_sec)
+		+ (end.tv_nsec - start.tv_nsec) / 1e9;
 }
 
-int main() {
-	int runs = 20;
+int main(void) {
 
-	double fast_total = 0.0;
-	double normal_total = 0.0;
+	FILE *f = fopen("benchmark.txt", "w");
+	if (f == NULL) {
+		perror("fopen");
+		return 1;
+	}
 
-	for (int i = 0; i < runs; i++) {
-		group g = create_group();
+	for (int order = 10728 + 1; order <= MAX_ORDER; order += 50) {
 
-		/* Fast version */
-		{
-			gbg_collector gbc = create_empty_gbg_collector();
+		printf("Order %d/%d\n", order, MAX_ORDER);
 
-			struct timespec start, end;
+		double fast_total = 0.0;
+		double normal_total = 0.0;
 
-			clock_gettime(CLOCK_MONOTONIC, &start);
+		group g = create_abelian_group(order);
 
-			group_data gd = calculate_group_data_fast(g, gbc);
+		for (int run = 0; run < RUNS; run++) {
 
-			clock_gettime(CLOCK_MONOTONIC, &end);
+			/* Fast version */
+			{
+				gbg_collector gbc = create_empty_gbg_collector();
 
-			fast_total +=
-				(end.tv_sec - start.tv_sec)
-				+ (end.tv_nsec - start.tv_nsec) / 1e9;
+				struct timespec start, end;
 
-			free_gbc_gdata(gd, gbc);
-		}
+				clock_gettime(CLOCK_MONOTONIC, &start);
+				group_data gd = calculate_group_data_fast(g, gbc);
+				clock_gettime(CLOCK_MONOTONIC, &end);
 
-		/* Normal version */
-		{
-			struct timespec start, end;
+				fast_total += elapsed(start, end);
 
-			clock_gettime(CLOCK_MONOTONIC, &start);
+				free_gbc_gdata(gd, gbc);
+			}
 
-			group_data gd = calculate_group_data(g);
+			/* Normal version */
+			{
+				struct timespec start, end;
 
-			clock_gettime(CLOCK_MONOTONIC, &end);
+				clock_gettime(CLOCK_MONOTONIC, &start);
+				group_data gd = calculate_group_data(g);
+				clock_gettime(CLOCK_MONOTONIC, &end);
 
-			normal_total +=
-				(end.tv_sec - start.tv_sec)
-				+ (end.tv_nsec - start.tv_nsec) / 1e9;
+				normal_total += elapsed(start, end);
 
-			free_group_data(gd);
+				free_group_data(gd);
+			}
 		}
 
 		group_free(g);
+
+		double fast_avg = fast_total / RUNS;
+		double normal_avg = normal_total / RUNS;
+
+		fprintf(
+			f,
+			"Order: %d\n"
+			"Fast: %.9f\n"
+			"Normal: %.9f\n"
+			"Speedup: %.4f\n"
+			"\n",
+			order,
+			fast_avg,
+			normal_avg,
+			normal_avg / fast_avg
+		);
+
+		fflush(f);
 	}
 
-	double fast_time = fast_total / runs;
-	double normal_time = normal_total / runs;
-
-	printf("Order: %d\n", TEST_ORDER);
-	printf("Runs: %d\n\n", runs);
-
-	printf("calculate_group_data_fast : %.9f s\n", fast_time);
-	printf("calculate_group_data      : %.9f s\n", normal_time);
-
-	printf("\nSpeedup: %.2fx\n",
-		normal_time / fast_time);
+	fclose(f);
 
 	return 0;
 }
