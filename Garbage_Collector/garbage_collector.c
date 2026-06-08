@@ -88,6 +88,7 @@ void append_data_and_link_in_tabl(data_list* tabl, int n, int i, int j, int g, i
 	append_data_list_from_ptr(tabl[i], ptr);
 
 	tabl[i]->tail->next = tabl[j]->head;
+	tabl[i]->length += tabl[j]->length;
 
 	push_gbg_collector(ptr, coll);
 

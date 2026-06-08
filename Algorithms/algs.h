@@ -12,13 +12,21 @@
 #include <stdbool.h>
 
 int find_neutral(group g);
+int find_neutral_cpr(cpr_group g);
+
 int fast_exp(group g, int x, int neutral, int n);
 
 int calculate_next_gen_and_rel(group g, group_data gd, int new_gen, int neutral);
 int calculate_next_gen_and_rel_fast(group g, group_data gd, gbg_collector coll, int new_gen, int neutral);
 
+int calculate_next_gen_and_rel_cpr(cpr_group g, group_data gd, int new_gen, int neutral);
+int calculate_next_gen_and_rel_fast_cpr(cpr_group g, group_data gd, gbg_collector coll, int new_gen, int neutral);
+
 group_data calculate_group_data(group g);
 group_data calculate_group_data_fast(group g, gbg_collector trash);
+
+group_data calculate_group_data_cpr(cpr_group g);
+group_data calculate_group_data_fast_cpr(cpr_group g, gbg_collector trash);
 
 void check_group_data(group g, group_data gd, int neutral);
 

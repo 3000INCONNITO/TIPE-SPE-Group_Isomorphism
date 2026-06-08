@@ -27,4 +27,20 @@ int calculate(group g, int x, int y);
 bool is_neutral(group g, int x);
 int get_neutral(group  g);
 
+typedef long long int ll;
+typedef struct cpr_group_s {
+	int rank;
+	ll n;
+	int* ivf;
+	int* strides;
+} cpr_group_t;
+typedef cpr_group_t* cpr_group;
+
+cpr_group create_cpr_group(int n, int rank, int* ivf);
+void cpr_group_free(cpr_group cpr_grp);
+void print_decomp(cpr_group c_grp, int x);
+int* cpr_group_encode(cpr_group c_grp, int x);
+int cpr_group_decode(cpr_group c_grp, int* decomp);
+int cpr_group_calculate(cpr_group cpr_grp, int x, int y);
+
 #endif
