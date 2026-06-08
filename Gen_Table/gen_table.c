@@ -175,11 +175,11 @@ void show_num_elts(group_data tr) {
 }
 
 void show_rel(group_data tr) {
-	printf("Décompositions:\n");
+	printf("Décompositions :\n");
 	assert(tr != NULL && tr->decomps != NULL);
 	for (int i = 0; i < tr->n; i++) {
 		if (tr->decomps[i]->length >= 1) {	
-			printf("%d: ", i);
+			printf("(%d,%d): ", i, tr->decomps[i]->length);
 			show_values_data_list(tr->decomps[i]);
 		}
 	}

@@ -9,13 +9,14 @@ gbg_node create_gbg_node(node_data* nd_addr) {
 }
 
 void free_gbg_node(gbg_node head_gbg_node) {
-	if (head_gbg_node == NULL) return;
-	gbg_node next = head_gbg_node->next;
-	free(*(head_gbg_node->to_free));
-	free(head_gbg_node->to_free);
-	free(head_gbg_node);
-
-	free_gbg_node(next);
+	gbg_node curr = head_gbg_node;
+	while (curr != NULL) {
+		gbg_node next = curr->next;
+		free(*(curr->to_free));
+		free(curr->to_free);
+		free(curr);
+		curr = next;
+	}
 }
 
 gbg_collector create_empty_gbg_collector(void) {
